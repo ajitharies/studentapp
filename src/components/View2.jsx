@@ -1,9 +1,15 @@
 import { Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
+import Add1 from './Add1'
+import { jsx } from '@emotion/react'
 
 const View2 = () => {
-    var [students,setstudents]=useState([])
+    var[students,setstudents]=useState([])
+    var[update,setupdate]=useState(false)
+    var[selected,setselected]=useState([])
+    
+
     useEffect(()=>{
        axios.get('http://localhost:3005/students')
        .then(response=>{setstudents(students=response.data)
@@ -21,8 +27,11 @@ const View2 = () => {
         .catch(err=>console.Console.log(err))
 
     }
-  return (
- <TableContainer>
+    const updatevalue=(value)=>{
+        setselected(value)
+       setupdate(true)
+    }
+    var finaljsx =<TableContainer>
     <Table>
         <TableHead>
             <TableRow>
@@ -44,12 +53,17 @@ const View2 = () => {
                     <TableCell>{value.name}</TableCell>
                     <TableCell>{value.grade}</TableCell>
                     <TableCell><Button onClick={()=>deleteValue(value.id)}>delete</Button></TableCell>
-                    <TableCell><Button>update</Button></TableCell>
+                    <TableCell><Button onClick={()=>updatevalue(value)}>update</Button></TableCell>
                  </TableRow>
             })}
         </TableBody>
     </Table>
  </TableContainer>
+ if(update)
+ finaljsx= <Add1 data={selected}method='put'/>
+  return (
+    finaljsx
+ 
   )
 }
 

@@ -12,7 +12,8 @@ function App() {
      <Navbar1/>
       <Routes>
         <Route path='/' element={<View2/>}/>
-        <Route path='/add' element={<Add1/>}/>
+        <Route path='/add' element={<Add1
+        data={{id:'',name:'',grade:''}} method="post"/>}/>
       </Routes>
  
 
